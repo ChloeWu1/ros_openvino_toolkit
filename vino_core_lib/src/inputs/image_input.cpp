@@ -23,12 +23,6 @@
 #include "vino_core_lib/slog.h"
 #include <string>
 
-// Image
-Input::Image::Image(const std::string& file)
-{
-  file_.assign(file);
-}
-
 bool Input::Image::initialize()
 {
   image_ = cv::imread(file_);
@@ -52,6 +46,7 @@ bool Input::Image::read(cv::Mat* frame)
     return false;
   }
   *frame = image_;
+  // setHeader("image_frame");
   return true;
 }
 
@@ -64,3 +59,5 @@ void Input::Image::config(const Input::Config& config)
     slog::info << "Image Input device was reinitialized with new file:" << config.path.c_str() << slog::endl;
   }
 }
+
+REG_INPUT(Image, "image");

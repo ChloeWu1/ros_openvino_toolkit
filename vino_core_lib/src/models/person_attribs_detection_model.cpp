@@ -60,3 +60,5 @@ const std::string Models::PersonAttribsDetectionModel::getModelCategory() const
 {
   return "Person Attributes Detection";
 }
+
+REG_MODEL(PersonAttribsDetectionModel, "PersonAttribsDetection");

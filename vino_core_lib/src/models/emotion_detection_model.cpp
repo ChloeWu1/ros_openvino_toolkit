@@ -75,3 +75,5 @@ const std::string Models::EmotionDetectionModel::getModelCategory() const
 {
   return "Emotions Detection";
 }
+
+REG_MODEL(EmotionDetectionModel, "EmotionRecognition");

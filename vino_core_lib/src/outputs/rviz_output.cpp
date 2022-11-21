@@ -25,8 +25,9 @@
 #include "vino_core_lib/pipeline.h"
 #include "vino_core_lib/outputs/rviz_output.h"
 
-Outputs::RvizOutput::RvizOutput(std::string pipeline_name) : BaseOutput(pipeline_name)
+void Outputs::RvizOutput::init(const std::string& pipeline_name)
 {
+  pipeline_name_ = pipeline_name;
   image_topic_ = nullptr;
   pub_image_ = nh_.advertise<sensor_msgs::Image>("/openvino_toolkit/" + pipeline_name + "/images", 16);
   image_window_output_ = std::make_shared<Outputs::ImageWindowOutput>(pipeline_name, 950);
@@ -96,6 +97,7 @@ void Outputs::RvizOutput::handleOutput()
   image_window_output_->decorateFrame();
   cv::Mat frame = image_window_output_->getFrame();
   std_msgs::Header header = getHeader();
+  // std_msgs::Header header = getPipeline()->getInputDevice()->getLockedHeader();
   std::shared_ptr<cv_bridge::CvImage> cv_ptr = std::make_shared<cv_bridge::CvImage>(header, "bgr8", frame);
   sensor_msgs::Image image_msg;
   image_topic_ = cv_ptr->toImageMsg();
@@ -121,3 +123,5 @@ std_msgs::Header Outputs::RvizOutput::getHeader()
   return header;
 }
 #endif  // depreated 
+
+REG_OUTPUT(RvizOutput, "RViz");

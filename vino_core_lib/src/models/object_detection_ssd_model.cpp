@@ -255,3 +255,5 @@ bool Models::ObjectDetectionSSDModel::updateLayerProperty(std::shared_ptr<ov::Mo
   slog::info << "This model is SSDNet-like, Layer Property updated!" << slog::endl;
   return true;
 }
+
+REG_MODEL(ObjectDetectionSSDModel, "ObjectDetection_SSD");

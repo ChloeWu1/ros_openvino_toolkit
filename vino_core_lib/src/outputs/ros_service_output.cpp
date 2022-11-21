@@ -132,3 +132,5 @@ void Outputs::RosServiceOutput::clearData()
   headpose_topic_ = nullptr;
   person_reid_topic_ = nullptr;
 }
+
+REG_OUTPUT(RosServiceOutput, "RosService");

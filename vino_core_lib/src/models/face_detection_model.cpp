@@ -98,3 +98,44 @@ const std::string Models::FaceDetectionModel::getModelCategory() const
 {
   return "Face Detection";
 }
+
+bool Models::FaceDetectionModel::enqueue(const std::shared_ptr<Engines::Engine>& engine, const cv::Mat& frame,
+                                              const cv::Rect& input_frame_loc)
+{
+  if (!this->matToBlob(frame, input_frame_loc, 1, 0, engine))
+  {
+    return false;
+  }
+
+  setFrameSize(frame.cols, frame.rows);
+  return true;
+}
+
+bool Models::FaceDetectionModel::matToBlob(const cv::Mat& orig_image, const cv::Rect&, float scale_factor,
+                                                int batch_index, const std::shared_ptr<Engines::Engine>& engine)
+{
+  return true;
+}
+
+bool Models::FaceDetectionModel::fetchResults(const std::shared_ptr<Engines::Engine>& engine,
+                                                   std::vector<vino_core_lib::ObjectDetectionResult>& results,
+                                                   const float& confidence_thresh, const bool& enable_roi_constraint)
+{
+  return true;
+}
+
+bool Models::FaceDetectionModel::fetchResults(const std::shared_ptr<Engines::Engine>& engine,
+                                                   std::vector<vino_core_lib::FaceDetectionResult>& results,
+                                                   const float& confidence_thresh, const bool& enable_roi_constraint)
+{
+  return true;
+}
+
+bool Models::FaceDetectionModel::updateLayerProperty(std::shared_ptr<ov::Model>& model)
+{
+  return true;
+}
+
+using namespace Models;
+
+REG_MODEL(FaceDetectionModel, "FaceDetection_SSD");

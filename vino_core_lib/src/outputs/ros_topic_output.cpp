@@ -25,8 +25,11 @@
 #include <string>
 #include <vector>
 
-Outputs::RosTopicOutput::RosTopicOutput(std::string pipeline_name) : pipeline_name_(pipeline_name)
+
+void Outputs::RosTopicOutput::init(const std::string& pipeline_name)
 {
+  pipeline_name_ = pipeline_name;
+
   pub_face_ = nh_.advertise<object_msgs::ObjectsInBoxes>("/openvino_toolkit/" + pipeline_name_ + "/faces", 16);
   pub_emotion_ = nh_.advertise<vino_people_msgs::EmotionsStamped>("/openvino_toolkit/" + pipeline_name_ + "/emotions", 16);
   pub_age_gender_ =
@@ -74,6 +77,7 @@ void Outputs::RosTopicOutput::accept(const std::vector<vino_core_lib::VehicleAtt
   vino_people_msgs::VehicleAttribs attribs;
   for (auto& r : results)
   {
+    // slog::info << ">";
     auto loc = r.getLocation();
     attribs.roi.x_offset = loc.x;
     attribs.roi.y_offset = loc.y;
@@ -91,6 +95,7 @@ void Outputs::RosTopicOutput::accept(const std::vector<vino_core_lib::LicensePla
   vino_people_msgs::LicensePlate plate;
   for (auto& r : results)
   {
+    // slog::info << ">";
     auto loc = r.getLocation();
     plate.roi.x_offset = loc.x;
     plate.roi.y_offset = loc.y;
@@ -107,6 +112,7 @@ void Outputs::RosTopicOutput::accept(const std::vector<vino_core_lib::PersonAttr
   vino_people_msgs::PersonAttribute person_attrib;
   for (auto& r : results)
   {
+    // slog::info << ">";
     auto loc = r.getLocation();
     person_attrib.roi.x_offset = loc.x;
     person_attrib.roi.y_offset = loc.y;
@@ -123,6 +129,7 @@ void Outputs::RosTopicOutput::accept(const std::vector<vino_core_lib::FaceReiden
   vino_people_msgs::Reidentification face;
   for (auto& r : results)
   {
+    // slog::info << ">";
     auto loc = r.getLocation();
     face.roi.x_offset = loc.x;
     face.roi.y_offset = loc.y;
@@ -139,6 +146,7 @@ void Outputs::RosTopicOutput::accept(const std::vector<vino_core_lib::PersonReid
   vino_people_msgs::Reidentification person;
   for (auto& r : results)
   {
+    // slog::info << ">";
     auto loc = r.getLocation();
     person.roi.x_offset = loc.x;
     person.roi.y_offset = loc.y;
@@ -155,6 +163,7 @@ void Outputs::RosTopicOutput::accept(const std::vector<vino_core_lib::ObjectSegm
   vino_people_msgs::ObjectInMask object;
   for (auto& r : results)
   {
+    // slog::info << ">";
     auto loc = r.getLocation();
     object.roi.x_offset = loc.x;
     object.roi.y_offset = loc.y;
@@ -280,6 +289,7 @@ void Outputs::RosTopicOutput::accept(const std::vector<vino_core_lib::LandmarksD
   vino_people_msgs::Landmark landmark;
   for (auto& r : results)
   {
+    // slog::info << ">";
     auto loc = r.getLocation();
     landmark.roi.x_offset = loc.x;
     landmark.roi.y_offset = loc.y;
@@ -300,6 +310,7 @@ void Outputs::RosTopicOutput::accept(const std::vector<vino_core_lib::LandmarksD
 void Outputs::RosTopicOutput::handleOutput()
 {
   std_msgs::Header header = getHeader();
+  // auto header = getPipeline()->getInputDevice()->getLockedHeader();
   if (vehicle_attribs_topic_ != nullptr)
   {
     vino_people_msgs::VehicleAttribsStamped vehicle_attribs_msg;
@@ -334,6 +345,7 @@ void Outputs::RosTopicOutput::handleOutput()
   }
   if (segmented_objects_topic_ != nullptr)
   {
+    // slog::info << "publishing faces outputs." << slog::endl;
     vino_people_msgs::ObjectsInMasks segmented_msg;
     segmented_msg.header = header;
     segmented_msg.objects_vector.swap(segmented_objects_topic_->objects_vector);
@@ -423,3 +435,5 @@ std_msgs::Header Outputs::RosTopicOutput::getHeader()
   return header;
 }
 #endif  // depreated
+
+REG_OUTPUT(RosTopicOutput, "RosTopic");

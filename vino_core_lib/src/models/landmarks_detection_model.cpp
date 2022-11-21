@@ -77,3 +77,5 @@ const std::string Models::LandmarksDetectionModel::getModelCategory() const
 {
   return "Landmarks Detection";
 }
+
+REG_MODEL(LandmarksDetectionModel, "LandmarksDetection");

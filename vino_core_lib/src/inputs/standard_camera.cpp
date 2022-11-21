@@ -74,3 +74,5 @@ int Input::StandardCamera::getCameraId()
   camera_id_ = STANDARD_CAMERA_COUNT;
   return STANDARD_CAMERA_COUNT;
 }
+
+REG_INPUT(StandardCamera, "StandardCamera");

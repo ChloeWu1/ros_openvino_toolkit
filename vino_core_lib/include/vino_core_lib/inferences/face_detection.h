@@ -44,11 +44,44 @@ namespace vino_core_lib
  * @class FaceDetectionResult
  * @brief Class for storing and processing face detection result.
  */
-class FaceDetectionResult : public ObjectDetectionResult
+class FaceDetectionResult : public Result
 {
 public:
+  friend class ObjectDetection;
   explicit FaceDetectionResult(const cv::Rect& location);
+  std::string getLabel() const
+  {
+    return label_;
+  }
+
+  void setLabel(const std::string& label)
+  {
+    label_ = label;
+  }
+  /**
+   * @brief Get the confidence that the detected area is a face.
+   * @return The confidence value.
+   */
+  float getConfidence() const
+  {
+    return confidence_;
+  }
+
+  void setConfidence(const float& con)
+  {
+    confidence_ = con;
+  }
+
+  bool operator<(const FaceDetectionResult& s2) const
+  {
+    return this->confidence_ > s2.confidence_;
+  }
+
+private:
+  std::string label_ = "";
+  float confidence_ = -1;
 };
+
 
 /**
  * @class FaceDetection
@@ -58,6 +91,8 @@ class FaceDetection : public ObjectDetection
 {
 public:
   explicit FaceDetection(bool, double);
+  FaceDetection(){};
+  ~FaceDetection() override {};
 };
 }  // namespace vino_core_lib
 #endif  // VINO_CORE_LIB__INFERENCES__FACE_DETECTION_H

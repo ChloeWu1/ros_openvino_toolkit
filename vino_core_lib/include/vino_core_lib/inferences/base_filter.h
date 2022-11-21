@@ -79,7 +79,7 @@ public:
    * @return True if the first operator has higher priority, false if not.
    */
   bool isPriorTo(const std::string&, const std::string&);
-
+  
   /**
    * @brief Convert the input bool variable to a string type.
    * @param[in] A bool type to be converted.

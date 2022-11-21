@@ -20,6 +20,7 @@
 #define VINO_CORE_LIB__MODELS__VEHICLE_ATTRIBS_DETECTION_MODEL_H
 #include <string>
 #include "vino_core_lib/models/base_model.h"
+
 namespace Models
 {
 /**
@@ -29,7 +30,10 @@ namespace Models
 class VehicleAttribsDetectionModel : public BaseModel
 {
 public:
+  VehicleAttribsDetectionModel() {};
+
   VehicleAttribsDetectionModel(const std::string& label_loc, const std::string& model_loc, int batch_size = 1);
+  
   inline const std::string getInputName()
   {
     return input_;
