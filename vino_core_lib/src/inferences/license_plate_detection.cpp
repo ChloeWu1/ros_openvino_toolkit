@@ -27,7 +27,7 @@
 using namespace vino_core_lib;
 
 // LicensePlateDetectionResult
-vino_core_lib::LicensePlateDetectionResult::LicensePlateDetectionResult(const cv::Rect& location) : Result(location)
+LicensePlateDetectionResult::LicensePlateDetectionResult(const cv::Rect& location) : Result(location)
 {
 }
 

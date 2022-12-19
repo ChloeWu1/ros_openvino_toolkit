@@ -34,7 +34,7 @@ PersonAttribsDetectionResult::PersonAttribsDetectionResult(const cv::Rect& locat
 
 // PersonAttribsDetection
 PersonAttribsDetection::PersonAttribsDetection(double attribs_confidence)
-  : attribs_confidence_(attribs_confidence), vino_core_lib::BaseInference()
+  : attribs_confidence_(attribs_confidence), BaseInference()
 {
 }
 
